@@ -3,7 +3,6 @@ defmodule SportDataServer.CSVImport do
   This module is responsible for importing CSV data to DB.
   """
   require Logger
-  alias SportDataServer.DB
   alias NimbleCSV.RFC4180, as: CSV
 
   @doc """
@@ -28,7 +27,7 @@ defmodule SportDataServer.CSVImport do
   end
 
   defp persist_row(%{league: league, season: season} = record) do
-    DB.add_record(league, season, record)
+    SportDataServer.insert_record(league, season, record)
   end
 
   @doc """

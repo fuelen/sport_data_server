@@ -5,6 +5,9 @@
 # is restricted to this project.
 use Mix.Config
 
+config :phoenix, :format_encoders,
+  proto: SportDataServerWeb.Protobufs
+
 config :sport_data_server, initial_csv_file_path: "priv/data.csv"
 # Configures the endpoint
 config :sport_data_server, SportDataServerWeb.Endpoint,

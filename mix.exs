@@ -38,7 +38,9 @@ defmodule SportDataServer.Mixfile do
       {:cowboy, "~> 1.0"},
       {:nimble_csv, "~> 0.3"},
       {:timex, "~> 3.1"},
-      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
+      {:exprotobuf, "~> 1.2.9"},
+      {:trailing_format_plug, "~> 0.0.7"}
     ]
   end
 end

@@ -9,23 +9,33 @@ defmodule SportDataServer.DB do
     GenServer.start_link(__MODULE__, %{table_name: opts[:name]}, opts)
   end
 
-  @spec lookup(String.t(), String.t(), opts()) :: Enumerable.t()
-  def lookup(league, season, opts \\ []) do
+  @spec flush(opts()) :: :ok
+  def flush(opts \\ []) do
     opts
     |> get_table_from_opts()
-    |> :ets.lookup({league, season})
+    |> GenServer.call(:flush)
+  end
+
+  @spec lookup(any(), opts()) :: Enumerable.t()
+  def lookup(key, opts \\ []) do
+    opts
+    |> get_table_from_opts()
+    |> :ets.lookup(key)
     |> Enum.map(&elem(&1, 1))
   end
 
-  @spec add_record(String.t(), String.t(), map(), opts()) :: :ok
-  def add_record(league, season, record, opts \\ []) do
+  @spec insert(any(), any(), opts()) :: :ok
+  def insert(key, record, opts \\ []) do
     opts
     |> get_table_from_opts()
-    |> GenServer.call({:add, {league, season}, record})
+    |> GenServer.call({:insert, key, record})
   end
 
-  @spec league_and_season_pairs(opts()) :: Enumerable.t()
-  def league_and_season_pairs(opts \\ []) do
+  @doc """
+  Returns a stream with unique keys
+  """
+  @spec keys(opts()) :: Enumerable.t()
+  def keys(opts \\ []) do
     eot = :"$end_of_table"
     table = get_table_from_opts(opts)
 
@@ -57,8 +67,14 @@ defmodule SportDataServer.DB do
   end
 
   @impl true
-  def handle_call({:add, key, value}, _from, %{table: table} = state) do
+  def handle_call({:insert, key, value}, _from, %{table: table} = state) do
     :ets.insert(table, {key, value})
+    {:reply, :ok, state}
+  end
+
+  @impl true
+  def handle_call(:flush, _from, %{table: table} = state) do
+    :ets.delete_all_objects(table)
     {:reply, :ok, state}
   end
 

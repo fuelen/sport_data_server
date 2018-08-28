@@ -28,6 +28,9 @@ defmodule SportDataServerWeb.ConnCase do
 
 
   setup _tags do
+    on_exit(fn ->
+      SportDataServer.DB.flush()
+    end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 

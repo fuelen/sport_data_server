@@ -1,0 +1,6 @@
+syntax = "proto3";
+import "record.proto";
+
+message RecordCollection {
+  repeated Record records = 1;
+}
