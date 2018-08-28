@@ -10,8 +10,7 @@ defmodule SportDataServer.Application do
     children = [
       # Start the endpoint when the application starts
       supervisor(SportDataServerWeb.Endpoint, []),
-      # Start your own worker by calling: SportDataServer.Worker.start_link(arg1, arg2, arg3)
-      # worker(SportDataServer.Worker, [arg1, arg2, arg3]),
+      SportDataServer.DB
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
