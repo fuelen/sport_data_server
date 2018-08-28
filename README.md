@@ -20,6 +20,12 @@
   * Run test suite with `mix test`
   * To generate documentation from tests use `DOC=1 mix test`. Generated file you can find in `docs/endpoints.md`
 
+## Run in Docker
+  Copy `.docker.env.example` to `.docker.env`.
+  Build with `docker-compose build --build-arg APP_NAME=$APP_NAME --build-arg APP_VSN=$APP_VSN`
+  and run `docker-compose up --scale app=3`. `$APP_NAME` and `$APP_VSN` variables you can find in `.envrc`.
+  The result can be checked in a browser, navigating to [http://localhost:4000](http://localhost:4000).
+
 # About project
   This is just a server of data located in `priv/data.csv` using JSON and Proto Buffers.
   It doesn't use 3-rd party databases, only mechanisms built-in to Erlang/OTP.

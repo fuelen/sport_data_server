@@ -8,7 +8,7 @@ defmodule SportDataServerWeb.LeagueSeasonPairView do
     )
   end
 
-  def render("show." <> _format, %{league_season_pair: {league, season}} = props) do
+  def render("show." <> _format, %{league_season_pair: {league, season}}) do
     Protobufs.LeagueSeasonPair.new(%{league: league, season: season})
   end
 end

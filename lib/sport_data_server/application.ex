@@ -29,12 +29,18 @@ defmodule SportDataServer.Application do
   end
 
   defp import_data_file do
-    file_path = Application.get_env(:sport_data_server, :initial_csv_file_path)
+    case Application.get_env(:sport_data_server, :initial_csv_file_path) do
+      nil ->
+        :noop
 
-    file_path
-    |> File.stream!()
-    |> SportDataServer.CSVImport.import_stream()
+      relative_path ->
+        file_path = Application.app_dir(:sport_data_server, relative_path)
 
-    Logger.info("File #{inspect(file_path)} was imported!")
+        file_path
+        |> File.stream!()
+        |> SportDataServer.CSVImport.import_stream()
+
+        Logger.info("File #{inspect(file_path)} was imported!")
+    end
   end
 end

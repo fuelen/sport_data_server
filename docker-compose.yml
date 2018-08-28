@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  app:
+    build: .
+    env_file:
+      - .docker.env
+  lb:
+    image: eeacms/haproxy
+    ports:
+      - "4000:5000"
+      - "1936:1936"
+    depends_on:
+      - app
+    environment:
+      HTTPCHK: "HEAD /league_season_pairs.json"
+      BACKENDS: "app"
+      BACKEND_NAME: "app"
+      BACKENDS_PORT: "4000"
+      DNS_ENABLED: "true"

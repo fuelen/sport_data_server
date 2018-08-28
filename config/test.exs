@@ -9,4 +9,4 @@ config :sport_data_server, SportDataServerWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-config :sport_data_server, initial_csv_file_path: "test/fixtures/data.csv"
+config :sport_data_server, initial_csv_file_path: nil

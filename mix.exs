@@ -41,7 +41,8 @@ defmodule SportDataServer.Mixfile do
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:exprotobuf, "~> 1.2.9"},
       {:trailing_format_plug, "~> 0.0.7"},
-      {:bureaucrat, "~> 0.2.4"}
+      {:bureaucrat, "~> 0.2.4"},
+      {:distillery, "~> 2.0"}
     ]
   end
 end
