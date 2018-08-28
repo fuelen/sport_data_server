@@ -3,12 +3,12 @@ defmodule SportDataServerWeb.LeagueSeasonPairView do
   alias SportDataServerWeb.Protobufs
 
   def render("index." <> _format, %{pairs: pairs}) do
-    Protobufs.PairCollection.new(
-      pairs: render_many(pairs, __MODULE__, "show.proto")
+    Protobufs.LeagueSeasonPairCollection.new(
+      league_season_pairs: render_many(pairs, __MODULE__, "show.proto")
     )
   end
 
-  def render("show." <> _format, %{league_season_pair: {league, season}}) do
-    Protobufs.Pair.new(%{league: league, season: season})
+  def render("show." <> _format, %{league_season_pair: {league, season}} = props) do
+    Protobufs.LeagueSeasonPair.new(%{league: league, season: season})
   end
 end

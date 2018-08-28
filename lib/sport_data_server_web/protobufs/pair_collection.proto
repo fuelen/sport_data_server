@@ -1,6 +1,0 @@
-syntax = "proto3";
-import "pair.proto";
-
-message PairCollection {
-  repeated Pair pairs = 1;
-}

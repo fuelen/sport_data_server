@@ -50,37 +50,34 @@ defmodule SportDataServerWeb.RecordControllerTest do
       resp = get(conn, record_path(conn, :index, "league1", "season1", "json"))
       assert data = json_response(resp, 200)
 
-      assert data ==
-               %{
-                 "records" => [
-                   %{
-                     "away_team" => "Osasuna",
-                     "date" => %{"day" => 19, "month" => 8, "year" => 2016},
-                     "ftag" => 1,
-                     "fthg" => 1,
-                     "ftr" => "D",
-                     "home_team" => "Malaga",
-                     "htag" => 0,
-                     "hthg" => 0,
-                     "htr" => "D",
-                     "league" => "SP1",
-                     "season" => "201617"
-                   },
-                   %{
-                     "away_team" => "Eibar",
-                     "date" => %{"day" => 19, "month" => 8, "year" => 2016},
-                     "ftag" => 1,
-                     "fthg" => 2,
-                     "ftr" => "H",
-                     "home_team" => "La Coruna",
-                     "htag" => 0,
-                     "hthg" => 0,
-                     "htr" => "D",
-                     "league" => "SP1",
-                     "season" => "201617"
-                   }
-                 ]
-               }
+      assert data == %{
+               "records" => [
+                 %{
+                   "away_team" => "Osasuna",
+                   "date" => %{"day" => 19, "month" => 8, "year" => 2016},
+                   "ftag" => 1,
+                   "fthg" => 1,
+                   "ftr" => "D",
+                   "home_team" => "Malaga",
+                   "htag" => 0,
+                   "hthg" => 0,
+                   "htr" => "D",
+                   "league_season_pair" => %{"league" => "SP1", "season" => "201617"}
+                 },
+                 %{
+                   "away_team" => "Eibar",
+                   "date" => %{"day" => 19, "month" => 8, "year" => 2016},
+                   "ftag" => 1,
+                   "fthg" => 2,
+                   "ftr" => "H",
+                   "home_team" => "La Coruna",
+                   "htag" => 0,
+                   "hthg" => 0,
+                   "htr" => "D",
+                   "league_season_pair" => %{"league" => "SP1", "season" => "201617"}
+                 }
+               ]
+             }
     end
 
     test ".proto", %{conn: conn} do
@@ -104,8 +101,10 @@ defmodule SportDataServerWeb.RecordControllerTest do
                      htag: 0,
                      hthg: 0,
                      htr: "D",
-                     league: "SP1",
-                     season: "201617"
+                     league_season_pair: %SportDataServerWeb.Protobufs.LeagueSeasonPair{
+                       league: "SP1",
+                       season: "201617"
+                     }
                    },
                    %SportDataServerWeb.Protobufs.Record{
                      away_team: "Eibar",
@@ -121,8 +120,10 @@ defmodule SportDataServerWeb.RecordControllerTest do
                      htag: 0,
                      hthg: 0,
                      htr: "D",
-                     league: "SP1",
-                     season: "201617"
+                     league_season_pair: %SportDataServerWeb.Protobufs.LeagueSeasonPair{
+                       league: "SP1",
+                       season: "201617"
+                     }
                    }
                  ]
                }

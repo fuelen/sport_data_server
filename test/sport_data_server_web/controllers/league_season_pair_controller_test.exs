@@ -51,7 +51,7 @@ defmodule SportDataServerWeb.LeagueSeasonPairControllerTest do
       assert data = json_response(resp, 200)
 
       assert data == %{
-               "pairs" => [
+               "league_season_pairs" => [
                  %{"league" => "league3", "season" => "season2"},
                  %{"league" => "league1", "season" => "season1"}
                ]
@@ -62,11 +62,17 @@ defmodule SportDataServerWeb.LeagueSeasonPairControllerTest do
       resp = get(conn, league_season_pair_path(conn, :index, "proto"))
       assert data = resp.resp_body
 
-      assert data |> SportDataServerWeb.Protobufs.PairCollection.decode() ==
-               %SportDataServerWeb.Protobufs.PairCollection{
-                 pairs: [
-                   %SportDataServerWeb.Protobufs.Pair{league: "league3", season: "season2"},
-                   %SportDataServerWeb.Protobufs.Pair{league: "league1", season: "season1"}
+      assert data |> SportDataServerWeb.Protobufs.LeagueSeasonPairCollection.decode() ==
+               %SportDataServerWeb.Protobufs.LeagueSeasonPairCollection{
+                 league_season_pairs: [
+                   %SportDataServerWeb.Protobufs.LeagueSeasonPair{
+                     league: "league3",
+                     season: "season2"
+                   },
+                   %SportDataServerWeb.Protobufs.LeagueSeasonPair{
+                     league: "league1",
+                     season: "season1"
+                   }
                  ]
                }
     end

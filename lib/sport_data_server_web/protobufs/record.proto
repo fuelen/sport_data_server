@@ -1,16 +1,16 @@
 syntax = "proto3";
 import "date.proto";
+import "league_season_pair.proto";
 
 message Record {
-  string league = 1;
-  string season = 2;
-  Date date = 3;
-  string home_team = 4;
-  string away_team = 5;
-  int32 fthg = 6;
-  int32 ftag = 7;
-  string ftr = 8;
-  int32 hthg = 9;
-  int32 htag = 10;
-  string htr = 11;
+  LeagueSeasonPair league_season_pair = 1;
+  Date date = 2;
+  string home_team = 3;
+  string away_team = 4;
+  int32 fthg = 5;
+  int32 ftag = 6;
+  string ftr = 7;
+  int32 hthg = 8;
+  int32 htag = 9;
+  string htr = 10;
 }

@@ -1,0 +1,6 @@
+syntax = "proto3";
+import "league_season_pair.proto";
+
+message LeagueSeasonPairCollection {
+  repeated LeagueSeasonPair league_season_pairs = 1;
+}
