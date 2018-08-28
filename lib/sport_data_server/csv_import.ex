@@ -9,22 +9,26 @@ defmodule SportDataServer.CSVImport do
   @doc """
   Parses a stream of csv-strings and imports them to the database
   """
-  @spec import_stream(stream :: Enumerable.t(), (String.t(), String.t(), any() -> any())) :: :ok
-  def import_stream(stream, recorder \\ &DB.add_record/3) do
+  @spec import_stream(stream :: Enumerable.t(), (map() -> any())) :: :ok
+  def import_stream(stream, recorder \\ &persist_row/1) do
     stream
     |> CSV.parse_stream()
     |> Stream.each(fn row ->
       row
       |> normalize_row()
       |> case do
-        {:ok, %{league: league, season: season} = normalized_record} ->
-          recorder.(league, season, normalized_record)
+        {:ok, normalized_record} ->
+          recorder.(normalized_record)
 
         {:error, reason} ->
           Logger.error("Couldn't normalize row #{inspect(row)} - #{reason}")
       end
     end)
     |> Stream.run()
+  end
+
+  defp persist_row(%{league: league, season: season} = record) do
+    DB.add_record(league, season, record)
   end
 
   @doc """
