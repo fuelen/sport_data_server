@@ -47,7 +47,11 @@ defmodule SportDataServerWeb.RecordControllerTest do
     end
 
     test ".json", %{conn: conn} do
-      resp = get(conn, record_path(conn, :index, "league1", "season1", "json"))
+      resp =
+        conn
+        |> get(record_path(conn, :index, "league1", "season1", "json"))
+        |> doc
+
       assert data = json_response(resp, 200)
 
       assert data == %{
@@ -81,7 +85,8 @@ defmodule SportDataServerWeb.RecordControllerTest do
     end
 
     test ".proto", %{conn: conn} do
-      resp = get(conn, record_path(conn, :index, "league1", "season1", "proto"))
+      resp = conn
+             |> get(record_path(conn, :index, "league1", "season1", "proto"))
       assert data = resp.resp_body
 
       assert data |> SportDataServerWeb.Protobufs.RecordCollection.decode() ==

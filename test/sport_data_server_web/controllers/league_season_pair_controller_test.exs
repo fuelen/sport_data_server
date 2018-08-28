@@ -47,7 +47,11 @@ defmodule SportDataServerWeb.LeagueSeasonPairControllerTest do
     end
 
     test ".json", %{conn: conn} do
-      resp = get(conn, league_season_pair_path(conn, :index, "json"))
+      resp =
+        conn
+        |> get(league_season_pair_path(conn, :index, "json"))
+        |> doc()
+
       assert data = json_response(resp, 200)
 
       assert data == %{
@@ -59,7 +63,10 @@ defmodule SportDataServerWeb.LeagueSeasonPairControllerTest do
     end
 
     test ".proto", %{conn: conn} do
-      resp = get(conn, league_season_pair_path(conn, :index, "proto"))
+      resp =
+        conn
+        |> get(league_season_pair_path(conn, :index, "proto"))
+
       assert data = resp.resp_body
 
       assert data |> SportDataServerWeb.Protobufs.LeagueSeasonPairCollection.decode() ==
