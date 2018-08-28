@@ -1,4 +1,5 @@
 defmodule SportDataServer.Application do
+  require Logger
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
@@ -10,7 +11,8 @@ defmodule SportDataServer.Application do
     children = [
       # Start the endpoint when the application starts
       supervisor(SportDataServerWeb.Endpoint, []),
-      SportDataServer.DB
+      SportDataServer.DB,
+      {Task, &import_data_file/0}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -24,5 +26,15 @@ defmodule SportDataServer.Application do
   def config_change(changed, _new, removed) do
     SportDataServerWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp import_data_file do
+    file_path = Application.get_env(:sport_data_server, :initial_csv_file_path)
+
+    file_path
+    |> File.stream!()
+    |> SportDataServer.CSVImport.import_stream()
+
+    Logger.info("File #{inspect(file_path)} was imported!")
   end
 end
