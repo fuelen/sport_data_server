@@ -13,7 +13,7 @@ services:
     depends_on:
       - app
     environment:
-      HTTPCHK: "HEAD /league_season_pairs.json"
+      HTTPCHK: "HEAD /health_check"
       BACKENDS: "app"
       BACKEND_NAME: "app"
       BACKENDS_PORT: "4000"

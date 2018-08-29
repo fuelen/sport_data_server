@@ -11,6 +11,8 @@ defmodule SportDataServerWeb.Router do
   scope "/", SportDataServerWeb do
     pipe_through :api
 
+    forward "/health_check", HealthCheckRouter
+
     get "/league_season_pairs.:format", LeagueSeasonPairController, :index
     get "/league_season_pairs/:league/:season/records.:format", RecordController, :index
   end
