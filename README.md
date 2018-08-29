@@ -25,11 +25,13 @@
   Build with `docker-compose build --build-arg APP_NAME=$APP_NAME --build-arg APP_VSN=$APP_VSN`
   and run `docker-compose up --scale app=3`. `$APP_NAME` and `$APP_VSN` variables you can find in `.envrc`.
   The result can be checked in a browser, navigating to [http://localhost:4000](http://localhost:4000).
+  Open [http://localhost:1936](http://localhost:1936) (admin/admin) to check health of the cluster.
 
 # About project
   This is just a server of data located in `priv/data.csv` using JSON and Proto Buffers.
   It doesn't use 3-rd party databases, only mechanisms built-in to Erlang/OTP.
-  All data keep in [ETS](http://erlang.org/doc/man/ets.html) table with concurrent reads, so you are limited only by RAM.
-  There is a simple wrapper around ETS table `SportDataServer.DB`. DB is populated on app start using [`Task`](https://hexdocs.pm/elixir/Task.html).
+  All data keep in [ETS](http://erlang.org/doc/man/ets.html) table with concurrent reads.
+  There is a simple wrapper around ETS table `SportDataServer.DB`. Table is populated on app start using [`Task`](https://hexdocs.pm/elixir/Task.html).
   Even though typical phoenix app has contexts, this app is too small so it contains only 1 main context `SportDataServer`.
-  Auto-generated documentation from tests can be found [here](docs/endpoints.md). It describes only JSON format because `bureaucrat` can't handle binary responses.
+  Auto-generated documentation from tests can be found [here](docs/endpoints.md).
+  proto files are located in `lib/sport_data_server_web/protobufs` directory.
